@@ -1,0 +1,192 @@
+﻿<Window x:Class="View.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="980"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.DataContext>
+        <vm:TestComparationViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>            
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="425"/>
+            <ColumnDefinition Width="425"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox  Name="FeatureCycleId" Grid.Row="1" 
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"                                   
+            materialDesign:HintAssist.FloatingScale="1"          
+            materialDesign:HintAssist.IsFloating="True"             
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10">
+            <materialDesign:HintAssist.Hint>
+                <StackPanel Orientation="Horizontal" Height="20">
+                    <TextBlock>Master</TextBlock>
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+        
+        <TextBox  Name="MasterCycleId" Grid.Row="2" 
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"                      
+            materialDesign:HintAssist.FloatingScale="1"          
+            materialDesign:HintAssist.IsFloating="True" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" >
+            <materialDesign:HintAssist.Hint>
+                <StackPanel Orientation="Horizontal" Height="20" >
+                    <TextBlock>Feature</TextBlock>
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        <Button Name="CompareButton" Grid.Row="3"
+                Content="Сравнить" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Command="{Binding CompareCommand}" 
+                Width="100" Height="30"  >
+
+            <Button.Resources>
+                <local:Converter x:Key="Converter"/>
+            </Button.Resources>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="FeatureCycleId" Path="Text"/>
+                    <Binding ElementName="MasterCycleId" Path="Text"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+
+        <StackPanel HorizontalAlignment="Center" Height="45" VerticalAlignment="Top" Width="900" Grid.ColumnSpan="3" Margin="52,0,10,0" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" SharedSizeGroup="Column1"/>
+                    <ColumnDefinition SharedSizeGroup="Column2"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="FAQ" Grid.Column="1" Content="FAQ" 
+                        Width="100" Height="45" 
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Foreground="#DD897F7F" 
+                        Command="{Binding OpenFaq}"/>
+                <Label Name="ErrorMessage" Grid.Column="0" 
+                       Width="Auto" Height="45" 
+                       Background="{x:Null}" BorderBrush="{x:Null}"  
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Foreground="#DD897F7F">
+                    <Label.Content>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ErrorMessage}"/>
+                    </Label.Content>
+                </Label>
+            </Grid>           
+        </StackPanel>
+
+        <GroupBox Name ="MasterGroupBox" 
+                  Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" 
+                  HorizontalAlignment="Center" VerticalAlignment="Top"
+                  Width="395" Height="Auto" 
+                  Margin="10,10,0,0"                     
+                  Style="{DynamicResource MaterialDesignGroupBox}"
+                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                  BorderThickness="0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Master" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
+                    <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
+                </Grid.ColumnDefinitions>
+                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualMasterFaildTests}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Упавшие"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView Name="MasterNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualMasterNotExecutedTests}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Незапущенные"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+
+        </GroupBox>
+
+        <GroupBox Name ="FeatureGroupBox" 
+                  Grid.Row="1" Grid.Column="2" Grid.RowSpan="5"
+                  HorizontalAlignment="Center" VerticalAlignment="Top"
+                  Height="Auto" Width="395"
+                  Margin="10,10,0,0"                     
+                  Style="{DynamicResource MaterialDesignGroupBox}"
+                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                  BorderThickness="0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Feature" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
+                    <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
+                </Grid.ColumnDefinitions>
+                <ListView Name="FeatureFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualFeatureFaildTests}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Упавшие"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView Name="FeatureNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualFeatureNotExecutedTests}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Незапущенные"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+        
+        <Button Name="Args" Content="Args" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Width="100" Command="{Binding MakeArgsCommand}" Height="30" Margin="0,5,0,0" >
+            <Button.Resources>
+                <local:Converter x:Key="Converter"/>
+            </Button.Resources>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="MasterFaildTests" Path="SelectedItems"/>
+                    <Binding ElementName="MasterNotExecutedTests" Path="SelectedItems"/>
+                    <Binding ElementName="FeatureFaildTests" Path="SelectedItems"/>
+                    <Binding ElementName="FeatureNotExecutedTests" Path="SelectedItems"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        
+    </Grid>
+</Window>
