@@ -46,8 +46,7 @@ namespace Model
                     else if (resp.StatusCode == HttpStatusCode.NotFound)
                     {
                         throw new WebException($"Указанного прогона {cycleId} не сущетсвует");
-                    }
-                    
+                    }                    
                 }
             }
             return JsonConvert.DeserializeObject<List<TestCycleJsonModel>>(jsonBody);

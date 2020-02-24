@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{8E2EF7EA-8387-4CE8-8830-44FA49167F93}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TetsComparation.UI", "TetsComparation.UI\TetsComparation.UI.csproj", "{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestComparation.DAL", "TestComparation.DAL\TestComparation.DAL.csproj", "{22559173-9E9F-472E-8FA5-72FBF26D1528}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22559173-9E9F-472E-8FA5-72FBF26D1528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22559173-9E9F-472E-8FA5-72FBF26D1528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22559173-9E9F-472E-8FA5-72FBF26D1528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22559173-9E9F-472E-8FA5-72FBF26D1528}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

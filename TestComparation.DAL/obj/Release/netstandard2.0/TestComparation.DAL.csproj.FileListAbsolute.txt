@@ -1,0 +1,7 @@
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\bin\Release\netstandard2.0\TestComparation.DAL.deps.json
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\bin\Release\netstandard2.0\TestComparation.DAL.dll
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\bin\Release\netstandard2.0\TestComparation.DAL.pdb
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\obj\Release\netstandard2.0\TestComparation.DAL.AssemblyInfoInputs.cache
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\obj\Release\netstandard2.0\TestComparation.DAL.AssemblyInfo.cs
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\obj\Release\netstandard2.0\TestComparation.DAL.dll
+C:\Users\vpavl\source\Fortis\TestComp\TestComparation.DAL\obj\Release\netstandard2.0\TestComparation.DAL.pdb
