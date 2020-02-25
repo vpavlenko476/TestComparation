@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TetsComparation.UI\\TetsComparation.UI.csproj": {}
+    "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TetsComparation.UI\\TetsComparation.UI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj": {
+    "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj",
         "projectName": "TestComparation.DAL",
-        "projectPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj",
-        "packagesPath": "C:\\Users\\vladislav.pavlenko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\obj\\",
+        "projectPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj",
+        "packagesPath": "C:\\Users\\vpavl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\vladislav.pavlenko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vpavl\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -62,24 +62,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TetsComparation.UI\\TetsComparation.UI.csproj": {
+    "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TetsComparation.UI\\TetsComparation.UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TetsComparation.UI\\TetsComparation.UI.csproj",
+        "projectUniqueName": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TetsComparation.UI\\TetsComparation.UI.csproj",
         "projectName": "TetsComparation.UI",
-        "projectPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TetsComparation.UI\\TetsComparation.UI.csproj",
-        "packagesPath": "C:\\Users\\vladislav.pavlenko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TetsComparation.UI\\obj\\",
+        "projectPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TetsComparation.UI\\TetsComparation.UI.csproj",
+        "packagesPath": "C:\\Users\\vpavl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TetsComparation.UI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\vladislav.pavlenko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vpavl\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -92,8 +92,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj": {
-                "projectPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj"
+              "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj": {
+                "projectPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj"
               }
             }
           }
@@ -150,7 +150,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

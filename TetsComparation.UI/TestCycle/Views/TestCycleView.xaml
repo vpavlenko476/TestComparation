@@ -95,8 +95,8 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        
-        
+
+
         <GroupBox Name ="MasterGroupBox" 
                   Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" 
                   HorizontalAlignment="Center" VerticalAlignment="Top"
@@ -170,7 +170,7 @@
             </Grid>
         </GroupBox>
 
-        <StackPanel HorizontalAlignment="Center" Height="45" VerticalAlignment="Top" Width="900" Grid.ColumnSpan="3" Margin="52,0,10,0" Grid.RowSpan="2">
+        <StackPanel HorizontalAlignment="Center" Height="45" VerticalAlignment="Center" Width="900" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="300" SharedSizeGroup="Column1"/>

@@ -40,7 +40,25 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             set { Set(ref _masterTestCycleModel, value); }
         }
 
+
         private bool _isBusy;
+
+        private string _errorMeassage;
+
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMeassage;
+            }
+            set
+            {
+                if (_errorMeassage != value)
+                {
+                    Set(ref _errorMeassage, value);
+                }
+            }
+        }
         /// <summary>
         /// Busy indicator
         /// </summary>
@@ -94,14 +112,21 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             string regex = @"^\d{4}$";
             var featureCycleId = parameters[0].ToString();
             var masterCycleId = parameters[1].ToString();
-            if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
+            try
             {
-                List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId(featureCycleId, login, password);
-                List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId(masterCycleId, login, password);
-                TestCycleModel master = new TestCycleModel(masterCycle);
-                FeatureTestCycleModel = new TestCycleModel(featureCycle, master);
-                MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
-            }              
+                if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
+                {
+                    List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId(featureCycleId, login, password);
+                    List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId(masterCycleId, login, password);
+                    TestCycleModel master = new TestCycleModel(masterCycle);
+                    FeatureTestCycleModel = new TestCycleModel(featureCycle, master);
+                    MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
+                }
+            }
+            catch(Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }                  
             
             IsBusy = false;
         }
