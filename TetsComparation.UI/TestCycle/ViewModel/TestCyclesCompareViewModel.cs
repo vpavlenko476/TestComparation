@@ -11,6 +11,10 @@ using AsyncAwaitBestPractices.MVVM;
 using TestComparation.DAL.TestCycle.Json.Models;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Windows;
+using System.Linq;
+using System.Text.RegularExpressions;
+using GalaSoft.MvvmLight.Command;
 
 namespace TetsComparation.UI.TestCycle.ViewModel
 {
@@ -46,11 +50,35 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             set { Set(ref _isBusy, value); }
         }
 
-        private ICommand _compareTestCycleCommand;
-        public ICommand CompareTestCycleCommand 
+        private IAsyncCommand<object[]> _compareTestCycleCommand;
+
+        private RelayCommand<object[]> _makeArgsCommand;
+        private RelayCommand _openFaq;
+
+
+        public IAsyncCommand<object[]> CompareTestCycleCommand 
         {
-            get { return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand(CompareTestCycle, CanExecuteGetWeatherData)); }
+            get
+            {
+                return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand<object[]>(CompareTestCycle, CanExecuteGetWeatherData));                
+            }
         }
+        public RelayCommand<object[]> MakeArgsCommand
+        {
+            get
+            {
+                return _makeArgsCommand ?? (_makeArgsCommand = new RelayCommand<object[]>(MakeArgs));                
+            }
+        }
+        public RelayCommand OpenFaq
+        {
+            get
+            {
+                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("https://confluence.monopoly.su/")));                
+            }
+        }
+
+
 
         public TestCyclesCompareViewModel()
         {
@@ -59,17 +87,41 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             _getCycelServise = new GetCycleService(_client);
         }
 
-        public async Task CompareTestCycle()
+        public async Task CompareTestCycle(object[] parameters)
         {
             IsBusy = true;
-            List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId("2292", login, password);
-            List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId("1652", login, password);
-            TestCycleModel master = new TestCycleModel(masterCycle);
-            FeatureTestCycleModel = new TestCycleModel(featureCycle, master);            
-            MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
+
+            string regex = @"^\d{4}$";
+            var featureCycleId = parameters[0].ToString();
+            var masterCycleId = parameters[1].ToString();
+            if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
+            {
+                List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId(featureCycleId, login, password);
+                List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId(masterCycleId, login, password);
+                TestCycleModel master = new TestCycleModel(masterCycle);
+                FeatureTestCycleModel = new TestCycleModel(featureCycle, master);
+                MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
+            }              
             
             IsBusy = false;
         }
+
+        public void MakeArgs(object[] parameters)
+        {
+            IsBusy = true;
+            
+            StringBuilder argsForJira = new StringBuilder();
+            var cycles = from fields in parameters
+                         where (!(fields == DependencyProperty.UnsetValue))
+                         from cycle in (ObservableCollection<object>)fields
+                         select (string)cycle;
+            foreach (var y in cycles) argsForJira.Append($"-trait \"Category={y}\" ");
+            Clipboard.SetData(DataFormats.Text, argsForJira);
+
+            IsBusy = false;
+        }
+
+
 
         private bool CanExecuteGetWeatherData(object? arg)
         {

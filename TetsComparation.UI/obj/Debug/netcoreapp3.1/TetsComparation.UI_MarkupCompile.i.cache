@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\vpavl\source\Fortis\TestComp\TetsComparation.UI\obj\Debug\netcoreapp3.1\
+C:\Users\vladislav.pavlenko\source\Fortis\TestComparation\TetsComparation.UI\obj\Debug\netcoreapp3.1\
 TetsComparation.UI
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-C:\Users\vpavl\source\Fortis\TestComp\TetsComparation.UI\App.xaml
+C:\Users\vladislav.pavlenko\source\Fortis\TestComparation\TetsComparation.UI\App.xaml
 2428605730
 
-7-1680688015
-2031598941226
+8535836735
+203-106786125
 MainWindow.xaml;TestCycle\Views\TestCycleView.xaml;
 
 False

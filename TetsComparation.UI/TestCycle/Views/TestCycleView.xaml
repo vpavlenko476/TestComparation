@@ -14,7 +14,7 @@
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
             DataContext="{Binding TestCyclesCompareMain, Source={StaticResource ViewModelLocator}}"
-            d:DesignHeight="450" d:DesignWidth="800">
+            d:DesignHeight="450" d:DesignWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -36,9 +36,9 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Command="{Binding CompareTestCycleCommand}" 
-                Width="100" Height="30"  >
+                Width="100" Height="30">
 
-            <!--<Button.Resources>
+            <Button.Resources>
                 <local:Converter x:Key="Converter"/>
             </Button.Resources>
             <Button.CommandParameter>
@@ -46,8 +46,57 @@
                     <Binding ElementName="FeatureCycleId" Path="Text"/>
                     <Binding ElementName="MasterCycleId" Path="Text"/>
                 </MultiBinding>
-            </Button.CommandParameter>-->
+            </Button.CommandParameter>
         </Button>
+
+        <Button Name="Args"
+                Content="Args" 
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Grid.Row="4"  Width="100" Height="30"
+                Command="{Binding MakeArgsCommand}"  Margin="0,5,0,0" >
+            <Button.Resources>
+                <local:Converter x:Key="Converter"/>
+            </Button.Resources>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="MasterFaildTests" Path="SelectedItems"/>
+                    <Binding ElementName="MasterNotExecutedTests" Path="SelectedItems"/>
+                    <Binding ElementName="FeatureFaildTests" Path="SelectedItems"/>
+                    <Binding ElementName="FeatureNotExecutedTests" Path="SelectedItems"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+
+        <TextBox  Name="FeatureCycleId" Grid.Row="2" 
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"                      
+            materialDesign:HintAssist.FloatingScale="1"          
+            materialDesign:HintAssist.IsFloating="True" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" >
+            <materialDesign:HintAssist.Hint>
+                <StackPanel Orientation="Horizontal" Height="20" >
+                    <TextBlock>Feature</TextBlock>
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        <TextBox  Name="MasterCycleId" Grid.Row="1" 
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"                                   
+            materialDesign:HintAssist.FloatingScale="1"          
+            materialDesign:HintAssist.IsFloating="True"             
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10">
+            <materialDesign:HintAssist.Hint>
+                <StackPanel Orientation="Horizontal" Height="20">
+                    <TextBlock>Master</TextBlock>
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        
+        
         <GroupBox Name ="MasterGroupBox" 
                   Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" 
                   HorizontalAlignment="Center" VerticalAlignment="Top"
@@ -120,5 +169,29 @@
                 </ListView>
             </Grid>
         </GroupBox>
+
+        <StackPanel HorizontalAlignment="Center" Height="45" VerticalAlignment="Top" Width="900" Grid.ColumnSpan="3" Margin="52,0,10,0" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" SharedSizeGroup="Column1"/>
+                    <ColumnDefinition SharedSizeGroup="Column2"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="FAQ" Grid.Column="1" Content="FAQ" 
+                        Width="100" Height="45" 
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Foreground="#DD897F7F" 
+                        Command="{Binding OpenFaq}"/>
+                <Label Name="ErrorMessage" Grid.Column="0" 
+                       Width="Auto" Height="45" 
+                       Background="{x:Null}" BorderBrush="{x:Null}"  
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Foreground="#DD897F7F">
+                    <Label.Content>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ErrorMessage}"/>
+                    </Label.Content>
+                </Label>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

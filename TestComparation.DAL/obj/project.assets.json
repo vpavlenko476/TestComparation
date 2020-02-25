@@ -39,7 +39,7 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "a/iSwnRZb+LHFk49hQOyThh/ZNC3vsbZsF65XwQIb863qF6msmhdQtxGXFL28Ob2NsCz/drEj28BJd/YPpLRBg==",
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
@@ -54,7 +54,7 @@
       ]
     },
     "NETStandard.Library/2.0.3": {
-      "sha512": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
+      "sha512": "XbbfjJhpjiT+MRjdHtfi3sXeOaTDv1YPVQoeaIHUYIrUrrpp6Rc/uLCCaApizOYka5PC2DS77qY9HOwFP30/kQ==",
       "type": "package",
       "path": "netstandard.library/2.0.3",
       "files": [
@@ -220,23 +220,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vpavl\\.nuget\\packages\\": {},
+    "C:\\Users\\vladislav.pavlenko\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj",
+      "projectUniqueName": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj",
       "projectName": "TestComparation.DAL",
-      "projectPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\TestComparation.DAL.csproj",
-      "packagesPath": "C:\\Users\\vpavl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vpavl\\source\\Fortis\\TestComp\\TestComparation.DAL\\obj\\",
+      "projectPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\TestComparation.DAL.csproj",
+      "packagesPath": "C:\\Users\\vladislav.pavlenko\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vladislav.pavlenko\\source\\Fortis\\TestComparation\\TestComparation.DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\vpavl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vladislav.pavlenko\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -281,7 +281,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
