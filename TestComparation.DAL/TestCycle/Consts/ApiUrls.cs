@@ -10,7 +10,7 @@ namespace TestComparation.DAL.TestCycle.Consts
     public static class  ApiUrls
     {
         /// <summary>
-        /// Url to get Tests in Cycle by cycle Id
+        /// Url для получения тестов из тестового прогона
         /// </summary>
         /// <remarks>
         /// {0} - cycel Id

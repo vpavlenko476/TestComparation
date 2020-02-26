@@ -5,12 +5,12 @@ using TestComparation.DAL.TestCycle.Json.Models;
 namespace TestComparation.DAL.TestCycle.Services
 {
     /// <summary>
-    /// Service to get Jira testcycle
+    /// Сервис для получения тестового прогона из Jira
     /// </summary>
     public interface IGetCycelServise
     {
         /// <summary>
-        /// Get tests in cycle by cycle Id
+        /// Получение тестов их тестового прогона по CycleId
         /// </summary>
         /// <param name="cycleId">jira cycleId</param>
         /// <param name="login">jira login</param>

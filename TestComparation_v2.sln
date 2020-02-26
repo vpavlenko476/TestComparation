@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{D2E44151-7DD0-40F7-A1D0-A13493590F51}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", "{83393078-5124-4905-9BEB-B82150CCE227}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{8E2EF7EA-8387-4CE8-8830-44FA49167F93}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TetsComparation.UI", "TetsComparation.UI\TetsComparation.UI.csproj", "{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestComparation.DAL", "TestComparation.DAL\TestComparation.DAL.csproj", "{22559173-9E9F-472E-8FA5-72FBF26D1528}"
@@ -19,18 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D2E44151-7DD0-40F7-A1D0-A13493590F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2E44151-7DD0-40F7-A1D0-A13493590F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2E44151-7DD0-40F7-A1D0-A13493590F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2E44151-7DD0-40F7-A1D0-A13493590F51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83393078-5124-4905-9BEB-B82150CCE227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83393078-5124-4905-9BEB-B82150CCE227}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83393078-5124-4905-9BEB-B82150CCE227}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83393078-5124-4905-9BEB-B82150CCE227}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E2EF7EA-8387-4CE8-8830-44FA49167F93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56E17CAC-FA27-4BD1-A4E2-7D25718D66E4}.Release|Any CPU.ActiveCfg = Release|Any CPU

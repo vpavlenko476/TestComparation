@@ -6,7 +6,6 @@ using System.Text;
 using TestComparation.DAL.TestCycle.Services;
 using TestComparation.DAL.TestCycle.Models;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using AsyncAwaitBestPractices.MVVM;
 using TestComparation.DAL.TestCycle.Json.Models;
 using System.Collections.Generic;
@@ -15,32 +14,60 @@ using System.Windows;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Command;
+using TestComparation.DAL.TestCycle.Exceptions;
 
 namespace TetsComparation.UI.TestCycle.ViewModel
 {
-
-
     public class TestCyclesCompareViewModel : ViewModelBase, IDisposable
     {
         private readonly HttpClient _client;
         private readonly IGetCycelServise _getCycelServise;
         private TestCycleModel _featureTestCycleModel;
         private TestCycleModel _masterTestCycleModel;
-        string login = ConfigurationManager.AppSettings["login"];
-        string password = ConfigurationManager.AppSettings["password"];
+        private string login = ConfigurationManager.AppSettings["login"];
+        private string password = ConfigurationManager.AppSettings["password"];
 
+        /// <summary>
+        /// Экземпляр тестового прогона на Feature ветке
+        /// </summary>
         public TestCycleModel FeatureTestCycleModel
         {
             get { return _featureTestCycleModel; }
             set { Set(ref _featureTestCycleModel, value); }
         }
+
+        /// <summary>
+        /// Экземпляр тестового прогона на Master ветке
+        /// </summary>
         public TestCycleModel MasterTestCycleModel
         {
             get { return _masterTestCycleModel; }
             set { Set(ref _masterTestCycleModel, value); }
         }
 
+
         private bool _isBusy;
+
+        private string _errorMeassage;
+
+        /// <summary>
+        /// Сообщение об ошибке
+        /// </summary>
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMeassage;
+            }
+            set
+            {
+                if (_errorMeassage != value)
+                {
+                    Set(ref _errorMeassage, value);
+                }
+            }
+        }
+
         /// <summary>
         /// Busy indicator
         /// </summary>
@@ -51,11 +78,12 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         }
 
         private IAsyncCommand<object[]> _compareTestCycleCommand;
-
         private RelayCommand<object[]> _makeArgsCommand;
         private RelayCommand _openFaq;
 
-
+        /// <summary>
+        /// Сравнение тестовых прогонов
+        /// </summary>
         public IAsyncCommand<object[]> CompareTestCycleCommand 
         {
             get
@@ -63,6 +91,10 @@ namespace TetsComparation.UI.TestCycle.ViewModel
                 return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand<object[]>(CompareTestCycle, CanExecuteGetWeatherData));                
             }
         }
+
+        /// <summary>
+        /// Создание строки для Developers Integration tests arguments
+        /// </summary>
         public RelayCommand<object[]> MakeArgsCommand
         {
             get
@@ -70,15 +102,17 @@ namespace TetsComparation.UI.TestCycle.ViewModel
                 return _makeArgsCommand ?? (_makeArgsCommand = new RelayCommand<object[]>(MakeArgs));                
             }
         }
+
+        /// <summary>
+        /// Открытие страницы FAQ
+        /// </summary>
         public RelayCommand OpenFaq
         {
             get
             {
-                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("https://confluence.monopoly.su/")));                
+                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("explorer.exe", "https://confluence.monopoly.su/")));                
             }
         }
-
-
 
         public TestCyclesCompareViewModel()
         {
@@ -91,17 +125,29 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         {
             IsBusy = true;
 
-            string regex = @"^\d{4}$";
+            string regex = @"^\d{3,4}$";
             var featureCycleId = parameters[0].ToString();
             var masterCycleId = parameters[1].ToString();
-            if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
+            try
             {
-                List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId(featureCycleId, login, password);
-                List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId(masterCycleId, login, password);
-                TestCycleModel master = new TestCycleModel(masterCycle);
-                FeatureTestCycleModel = new TestCycleModel(featureCycle, master);
-                MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
-            }              
+                if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
+                {
+                    List<TestCycleData> featureCycle = await _getCycelServise.GetTestsByCycleId(featureCycleId, login, password);
+                    List<TestCycleData> masterCycle = await _getCycelServise.GetTestsByCycleId(masterCycleId, login, password);
+                    TestCycleModel master = new TestCycleModel(masterCycle);
+                    FeatureTestCycleModel = new TestCycleModel(featureCycle, master);
+                    MasterTestCycleModel = new TestCycleModel(masterCycle, FeatureTestCycleModel);
+                    ErrorMessage = null;
+                }
+            }
+            catch(GetTestCycleException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+            catch(Exception ex)
+            {
+                ErrorMessage = $"Необработанная ошибка {ex.Message}";
+            }
             
             IsBusy = false;
         }
@@ -120,9 +166,6 @@ namespace TetsComparation.UI.TestCycle.ViewModel
 
             IsBusy = false;
         }
-
-
-
         private bool CanExecuteGetWeatherData(object? arg)
         {
             return !IsBusy;
@@ -131,6 +174,5 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         {
             _client?.Dispose();
         }
-
     }
 }

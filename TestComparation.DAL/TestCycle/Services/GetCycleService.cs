@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using TestComparation.DAL.TestCycle.Json.Models;
 using TestComparation.DAL.TestCycle.Consts;
 using System.Collections.Generic;
+using System.Net;
+using TestComparation.DAL.TestCycle.Exceptions;
 
 namespace TestComparation.DAL.TestCycle.Services
 {
@@ -29,6 +31,15 @@ namespace TestComparation.DAL.TestCycle.Services
                 var jsonBody = jsonData.Replace("$", "");
                 testCycleData = JsonConvert.DeserializeObject<List<TestCycleData>>(jsonBody);
             }
+            else if(response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new GetTestCycleException($"Неверные логин/пароль");
+            }
+            else if(response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new GetTestCycleException($"Указанного прогона {cycleId} не сущетсвует");
+            }
+           
             return testCycleData;
         }
     }

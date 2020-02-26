@@ -48,7 +48,6 @@ C:\Users\vpavl\source\Fortis\TestComp\Model\bin\Debug\System.ValueTuple.xml
 C:\Users\vpavl\source\Fortis\TestComp\Model\obj\Debug\Model.csproj.CopyComplete
 C:\Users\vpavl\source\Fortis\TestComp\Model\obj\Debug\Model.dll
 C:\Users\vpavl\source\Fortis\TestComp\Model\obj\Debug\Model.pdb
-C:\Users\vpavl\source\Fortis\TestComp\Model\obj\Debug\Model.csprojAssemblyReference.cache
 C:\Users\vladislav.pavlenko\source\Fortis\TestComparation\Model\bin\Debug\Model.dll
 C:\Users\vladislav.pavlenko\source\Fortis\TestComparation\Model\bin\Debug\Model.pdb
 C:\Users\vladislav.pavlenko\source\Fortis\TestComparation\Model\bin\Debug\CommonServiceLocator.dll
