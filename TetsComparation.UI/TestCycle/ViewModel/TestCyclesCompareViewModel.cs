@@ -61,10 +61,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             }
             set
             {
-                if (_errorMeassage != value)
-                {
-                    Set(ref _errorMeassage, value);
-                }
+                Set(ref _errorMeassage, value);
             }
         }
 
