@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TetsComparation.UI.TestCycle.Views"
+             xmlns:customComponents="clr-namespace:TetsComparation.UI.TestCycle.Views.CustomComponents"
              mc:Ignorable="d"              
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -23,6 +24,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -42,18 +44,7 @@
                 Content="Args" 
                 HorizontalAlignment="Center" VerticalAlignment="Top"
                 Grid.Row="4"  Width="100" Height="30"
-                Command="{Binding MakeArgsCommand}"  Margin="0,5,0,0" >
-            <Button.Resources>
-                <local:Converter x:Key="Converter"/>
-            </Button.Resources>
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource Converter}">
-                    <Binding ElementName="MasterFaildTests" Path="SelectedItems"/>
-                    <Binding ElementName="MasterNotExecutedTests" Path="SelectedItems"/>
-                    <Binding ElementName="FeatureFaildTests" Path="SelectedItems"/>
-                    <Binding ElementName="FeatureNotExecutedTests" Path="SelectedItems"/>
-                </MultiBinding>
-            </Button.CommandParameter>
+                Command="{Binding MakeArgsCommand}"  Margin="0,5,0,0" >      
         </Button>
 
         <TextBox  Name="FeatureCycleId" Grid.Row="2" 
@@ -93,8 +84,7 @@
                   Margin="10,10,0,0"                     
                   Style="{DynamicResource MaterialDesignGroupBox}"
                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  BorderThickness="0">
-            <!--DataContext="{Binding MasterTestCycleModel}">-->
+                  BorderThickness="0">           
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Master" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
@@ -105,20 +95,24 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" SelectedItem="{Binding SelectedItems.MasterFaildTests, Mode=OneWayToSource}">
-                    <ListView.View>
+                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterFaildTests" Grid.Column="0" 
+                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" 
+                                                 SelectedItemsList="{Binding SelectedItems.MasterFaildTests, Mode=TwoWay}">
+                    <customComponents:CustomListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
-                    </ListView.View>
-                </ListView>
-                <ListView Name="MasterNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualNotExecutedTest}">
+                    </customComponents:CustomListView.View>
+                </customComponents:CustomListView>
+                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualNotExecutedTest}"
+                                                 SelectedItemsList="{Binding SelectedItems.MasterNotExecutedTests, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </customComponents:CustomListView>
             </Grid>
 
         </GroupBox>
@@ -130,8 +124,7 @@
                   Margin="10,10,0,0"                     
                   Style="{DynamicResource MaterialDesignGroupBox}"
                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  BorderThickness="0"
-                  DataContext="{Binding FeatureTestCycleModel}">
+                  BorderThickness="0">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Feature" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
@@ -142,20 +135,24 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="FeatureFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualFaildTests}">
+                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureFaildTests" Grid.Column="0" 
+                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualFaildTests}"
+                                                 SelectedItemsList="{Binding SelectedItems.FeatureFaildTests, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
-                <ListView Name="FeatureNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualNotExecutedTest}">
+                </customComponents:CustomListView>
+                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualNotExecutedTest}"
+                                                 SelectedItemsList="{Binding SelectedItems.FeatureNotExecutedTests, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </customComponents:CustomListView>
             </Grid>
         </GroupBox>
 

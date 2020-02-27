@@ -171,11 +171,41 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             IsBusy = true;
             
             StringBuilder argsForJira = new StringBuilder();
-            var cycles = from fields in parameters
-                         where (!(fields == DependencyProperty.UnsetValue))
-                         from cycle in (ObservableCollection<object>)fields
-                         select (string)cycle;
-            foreach (var y in cycles) argsForJira.Append($"-trait \"Category={y}\" ");
+
+            #region Жуткий костыль, пока не придумал как обойти, скрою а то страшно
+            if (_selectedItems.MasterFaildTests!=null)
+            {
+                foreach (var cycleId in _selectedItems.MasterFaildTests)
+                {
+                    argsForJira.Append($"-trait \"Category={cycleId}\" ");
+                }
+            }
+
+            if (_selectedItems.MasterNotExecutedTests!=null)
+            {
+                foreach (var cycleId in _selectedItems.MasterNotExecutedTests)
+                {
+                    argsForJira.Append($"-trait \"Category={cycleId}\" ");
+                }
+            }
+
+            if (_selectedItems.FeatureFaildTests!=null)
+            {
+                foreach (var cycleId in _selectedItems.FeatureFaildTests)
+                {
+                    argsForJira.Append($"-trait \"Category={cycleId}\" ");
+                }
+            }
+
+            if (_selectedItems.FeatureNotExecutedTests!=null)
+            {
+                foreach (var cycleId in _selectedItems.FeatureNotExecutedTests)
+                {
+                    argsForJira.Append($"-trait \"Category={cycleId}\" ");
+                }
+            }
+            #endregion
+
             Clipboard.SetData(DataFormats.Text, argsForJira);
 
             IsBusy = false;
