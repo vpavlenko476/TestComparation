@@ -36,18 +36,7 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Command="{Binding CompareTestCycleCommand}" 
-                Width="100" Height="30">
-
-            <Button.Resources>
-                <local:Converter x:Key="Converter"/>
-            </Button.Resources>
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource Converter}">
-                    <Binding ElementName="FeatureCycleId" Path="Text"/>
-                    <Binding ElementName="MasterCycleId" Path="Text"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
+                Width="100" Height="30"/>
 
         <Button Name="Args"
                 Content="Args" 
@@ -73,7 +62,7 @@
             materialDesign:HintAssist.IsFloating="True" 
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" >
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" Text="{Binding TestCycleId.FeatureCycleId}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal" Height="20" >
                     <TextBlock>Feature</TextBlock>
@@ -87,7 +76,7 @@
             materialDesign:HintAssist.IsFloating="True"             
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10">
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" Text="{Binding TestCycleId.MasterCycleId}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal" Height="20">
                     <TextBlock>Master</TextBlock>
@@ -104,8 +93,8 @@
                   Margin="10,10,0,0"                     
                   Style="{DynamicResource MaterialDesignGroupBox}"
                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  BorderThickness="0"
-                  DataContext="{Binding MasterTestCycleModel}">
+                  BorderThickness="0">
+            <!--DataContext="{Binding MasterTestCycleModel}">-->
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Master" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
@@ -116,7 +105,7 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualFaildTests}">
+                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" SelectedItem="{Binding SelectedItems.MasterFaildTests, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>

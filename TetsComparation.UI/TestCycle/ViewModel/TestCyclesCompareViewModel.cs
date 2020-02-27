@@ -27,6 +27,20 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         private string login = ConfigurationManager.AppSettings["login"];
         private string password = ConfigurationManager.AppSettings["password"];
 
+        private ListViewSelectedItem _selectedItems;
+        private CycleId _cycleId;
+        public ListViewSelectedItem SelectedItems
+        {
+            get { return _selectedItems; }
+            set { Set(ref _selectedItems, value); }
+        }
+
+        public CycleId TestCycleId
+        {
+            get { return _cycleId; }
+            set { Set(ref _cycleId, value); }
+        }
+
         /// <summary>
         /// Экземпляр тестового прогона на Feature ветке
         /// </summary>
@@ -34,7 +48,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         {
             get { return _featureTestCycleModel; }
             set { Set(ref _featureTestCycleModel, value); }
-        }
+        }        
 
         /// <summary>
         /// Экземпляр тестового прогона на Master ветке
@@ -74,18 +88,18 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             set { Set(ref _isBusy, value); }
         }
 
-        private IAsyncCommand<object[]> _compareTestCycleCommand;
+        private IAsyncCommand _compareTestCycleCommand;
         private RelayCommand<object[]> _makeArgsCommand;
         private RelayCommand _openFaq;
 
         /// <summary>
         /// Сравнение тестовых прогонов
         /// </summary>
-        public IAsyncCommand<object[]> CompareTestCycleCommand 
+        public IAsyncCommand CompareTestCycleCommand 
         {
             get
             {
-                return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand<object[]>(CompareTestCycle, CanExecuteGetWeatherData));                
+                return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand(CompareTestCycle, CanExecuteGetWeatherData));                
             }
         }
 
@@ -98,33 +112,36 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             {
                 return _makeArgsCommand ?? (_makeArgsCommand = new RelayCommand<object[]>(MakeArgs));                
             }
-        }
-
-        /// <summary>
-        /// Открытие страницы FAQ
-        /// </summary>
-        public RelayCommand OpenFaq
-        {
-            get
-            {
-                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("explorer.exe", "https://confluence.monopoly.su/")));                
-            }
-        }
+        }       
 
         public TestCyclesCompareViewModel()
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("https://jira.monopoly.su/");
             _getCycelServise = new GetCycleService(_client);
+            _selectedItems = new ListViewSelectedItem();
+            _cycleId = new CycleId();
+            
         }
 
-        public async Task CompareTestCycle(object[] parameters)
+         /// <summary>
+        /// Открытие страницы FAQ
+        /// </summary>
+        public RelayCommand OpenFaq
+        {
+            get
+            {
+                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("explorer.exe", "https://confluence.monopoly.su/pages/viewpage.action?pageId=55610091")));                
+            }
+        }
+
+        public async Task CompareTestCycle()
         {
             IsBusy = true;
-
-            string regex = @"^\d{3,4}$";
-            var featureCycleId = parameters[0].ToString();
-            var masterCycleId = parameters[1].ToString();
+            
+            var masterCycleId = TestCycleId.MasterCycleId;
+            var featureCycleId = TestCycleId.FeatureCycleId;            
+            string regex = @"^\d{3,4}$";            
             try
             {
                 if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
