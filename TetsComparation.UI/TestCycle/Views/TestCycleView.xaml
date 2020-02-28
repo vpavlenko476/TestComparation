@@ -1,10 +1,12 @@
 ﻿<UserControl x:Class="TetsComparation.UI.TestCycle.Views.TestCycleView"
-               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TetsComparation.UI.TestCycle.Views"
+             xmlns:local="clr-namespace:TetsComparation.UI.TestCycle.Views"             
+             xmlns:cstomBenavior="clr-namespace:TetsComparation.UI.TestCycle.Views.Bahaviors"
+             xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"              
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -23,6 +25,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -36,35 +39,13 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Command="{Binding CompareTestCycleCommand}" 
-                Width="100" Height="30">
-
-            <Button.Resources>
-                <local:Converter x:Key="Converter"/>
-            </Button.Resources>
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource Converter}">
-                    <Binding ElementName="FeatureCycleId" Path="Text"/>
-                    <Binding ElementName="MasterCycleId" Path="Text"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
+                Width="100" Height="30"/>
 
         <Button Name="Args"
                 Content="Args" 
                 HorizontalAlignment="Center" VerticalAlignment="Top"
                 Grid.Row="4"  Width="100" Height="30"
-                Command="{Binding MakeArgsCommand}"  Margin="0,5,0,0" >
-            <Button.Resources>
-                <local:Converter x:Key="Converter"/>
-            </Button.Resources>
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource Converter}">
-                    <Binding ElementName="MasterFaildTests" Path="SelectedItems"/>
-                    <Binding ElementName="MasterNotExecutedTests" Path="SelectedItems"/>
-                    <Binding ElementName="FeatureFaildTests" Path="SelectedItems"/>
-                    <Binding ElementName="FeatureNotExecutedTests" Path="SelectedItems"/>
-                </MultiBinding>
-            </Button.CommandParameter>
+                Command="{Binding MakeArgsCommand}"  Margin="0,5,0,0" >      
         </Button>
 
         <TextBox  Name="FeatureCycleId" Grid.Row="2" 
@@ -73,7 +54,7 @@
             materialDesign:HintAssist.IsFloating="True" 
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" >
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" Text="{Binding TestCycleId.FeatureCycleId}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal" Height="20" >
                     <TextBlock>Feature</TextBlock>
@@ -87,7 +68,7 @@
             materialDesign:HintAssist.IsFloating="True"             
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10">
+            Width="100" Height="40" FontSize="12"  Padding="-10,-8,-10,-10" Text="{Binding TestCycleId.MasterCycleId}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal" Height="20">
                     <TextBlock>Master</TextBlock>
@@ -104,8 +85,7 @@
                   Margin="10,10,0,0"                     
                   Style="{DynamicResource MaterialDesignGroupBox}"
                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  BorderThickness="0"
-                  DataContext="{Binding MasterTestCycleModel}">
+                  BorderThickness="0">           
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Master" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
@@ -116,14 +96,22 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualFaildTests}">
+
+                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" >
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Name="MasterNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualNotExecutedTest}">
+                <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualNotExecutedTest}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>
@@ -141,8 +129,7 @@
                   Margin="10,10,0,0"                     
                   Style="{DynamicResource MaterialDesignGroupBox}"
                   materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                  BorderThickness="0"
-                  DataContext="{Binding FeatureTestCycleModel}">
+                  BorderThickness="0">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Feature" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="170,0,0,0"/>
@@ -153,14 +140,22 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="FeatureFaildTests" Grid.Column="0" ItemsSource="{Binding IndividualFaildTests}">
+                <ListView Name="FeatureFaildTests" Grid.Column="0" 
+                          ItemsSource="{Binding FeatureTestCycleModel.IndividualFaildTests}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Name="FeatureNotExecutedTests" Grid.Column="1" ItemsSource="{Binding IndividualNotExecutedTest}">
+                <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualNotExecutedTest}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>

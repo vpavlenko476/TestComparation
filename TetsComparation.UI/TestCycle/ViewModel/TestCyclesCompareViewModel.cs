@@ -5,16 +5,16 @@ using System.Net.Http;
 using System.Text;
 using TestComparation.DAL.TestCycle.Services;
 using TestComparation.DAL.TestCycle.Models;
-using System.Collections.ObjectModel;
 using AsyncAwaitBestPractices.MVVM;
 using TestComparation.DAL.TestCycle.Json.Models;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
-using System.Linq;
 using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Command;
 using TestComparation.DAL.TestCycle.Exceptions;
+using TetsComparation.UI.TestCycle.Views.Bahaviors;
+using System.Diagnostics;
 
 namespace TetsComparation.UI.TestCycle.ViewModel
 {
@@ -23,9 +23,34 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         private readonly HttpClient _client;
         private readonly IGetCycelServise _getCycelServise;
         private TestCycleModel _featureTestCycleModel;
-        private TestCycleModel _masterTestCycleModel;
+        private TestCycleModel _masterTestCycleModel;        
+        private CycleId _cycleId;
+        private MultiSelectBehavior _multiSelect;
+        private bool _isBusy;
+        private string _errorMeassage;
         private string login = ConfigurationManager.AppSettings["login"];
         private string password = ConfigurationManager.AppSettings["password"];
+        private IAsyncCommand _compareTestCycleCommand;
+        private RelayCommand _makeArgsCommand;
+        private RelayCommand _openFaq;
+
+        /// <summary>
+        /// ListView SelectedItems
+        /// </summary>
+        public MultiSelectBehavior MultiSelect
+        {
+            get { return _multiSelect; }
+            set { Set(ref _multiSelect, value); }
+        }       
+
+        /// <summary>
+        /// CycleIds из TextBox
+        /// </summary>
+        public CycleId TestCycleId
+        {
+            get { return _cycleId; }
+            set { Set(ref _cycleId, value); }
+        }
 
         /// <summary>
         /// Экземпляр тестового прогона на Feature ветке
@@ -34,7 +59,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         {
             get { return _featureTestCycleModel; }
             set { Set(ref _featureTestCycleModel, value); }
-        }
+        }        
 
         /// <summary>
         /// Экземпляр тестового прогона на Master ветке
@@ -44,11 +69,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             get { return _masterTestCycleModel; }
             set { Set(ref _masterTestCycleModel, value); }
         }
-
-
-        private bool _isBusy;
-
-        private string _errorMeassage;
+      
 
         /// <summary>
         /// Сообщение об ошибке
@@ -61,10 +82,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             }
             set
             {
-                if (_errorMeassage != value)
-                {
-                    Set(ref _errorMeassage, value);
-                }
+                Set(ref _errorMeassage, value);
             }
         }
 
@@ -75,59 +93,65 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         {
             get { return _isBusy; }
             set { Set(ref _isBusy, value); }
-        }
-
-        private IAsyncCommand<object[]> _compareTestCycleCommand;
-        private RelayCommand<object[]> _makeArgsCommand;
-        private RelayCommand _openFaq;
+        }      
 
         /// <summary>
         /// Сравнение тестовых прогонов
         /// </summary>
-        public IAsyncCommand<object[]> CompareTestCycleCommand 
+        public IAsyncCommand CompareTestCycleCommand 
         {
             get
             {
-                return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand<object[]>(CompareTestCycle, CanExecuteGetWeatherData));                
+                return _compareTestCycleCommand ?? (_compareTestCycleCommand = new AsyncCommand(CompareTestCycle, CanExecuteGetWeatherData));                
             }
         }
 
         /// <summary>
         /// Создание строки для Developers Integration tests arguments
         /// </summary>
-        public RelayCommand<object[]> MakeArgsCommand
+        public RelayCommand MakeArgsCommand
         {
             get
             {
-                return _makeArgsCommand ?? (_makeArgsCommand = new RelayCommand<object[]>(MakeArgs));                
+                return _makeArgsCommand ?? (_makeArgsCommand = new RelayCommand(MakeArgs));                
             }
-        }
+        }       
 
+        public TestCyclesCompareViewModel()
+        {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri("https://jira.monopoly.su/");
+            _getCycelServise = new GetCycleService(_client);            
+            _cycleId = new CycleId();
+            _multiSelect = new MultiSelectBehavior();
+        }
+      
         /// <summary>
         /// Открытие страницы FAQ
         /// </summary>
         public RelayCommand OpenFaq
         {
             get
-            {
-                return _openFaq ?? (_openFaq = new RelayCommand(() => System.Diagnostics.Process.Start("explorer.exe", "https://confluence.monopoly.su/")));                
+            {               
+                return _openFaq ?? (_openFaq = new RelayCommand(() =>
+                {
+                    Process proc = new Process();
+                    proc.StartInfo.UseShellExecute = true;
+                    proc.StartInfo.FileName = "https://confluence.monopoly.su/pages/viewpage.action?pageId=55610091";
+                    proc.Start();                   
+                }
+                ));                
             }
         }
-
-        public TestCyclesCompareViewModel()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://jira.monopoly.su/");
-            _getCycelServise = new GetCycleService(_client);
-        }
-
-        public async Task CompareTestCycle(object[] parameters)
+       
+        
+        public async Task CompareTestCycle()
         {
             IsBusy = true;
-
-            string regex = @"^\d{3,4}$";
-            var featureCycleId = parameters[0].ToString();
-            var masterCycleId = parameters[1].ToString();
+            
+            var masterCycleId = TestCycleId.MasterCycleId;
+            var featureCycleId = TestCycleId.FeatureCycleId;            
+            string regex = @"^\d{3,4}$";            
             try
             {
                 if (Regex.IsMatch(masterCycleId, regex) && Regex.IsMatch(featureCycleId, regex))
@@ -151,21 +175,20 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             
             IsBusy = false;
         }
-
-        public void MakeArgs(object[] parameters)
+        
+        public void MakeArgs()
         {
             IsBusy = true;
             
-            StringBuilder argsForJira = new StringBuilder();
-            var cycles = from fields in parameters
-                         where (!(fields == DependencyProperty.UnsetValue))
-                         from cycle in (ObservableCollection<object>)fields
-                         select (string)cycle;
-            foreach (var y in cycles) argsForJira.Append($"-trait \"Category={y}\" ");
+            StringBuilder argsForJira = new StringBuilder($"-trait \"Category=");
+
+            argsForJira.Append(string.Join($"\" -trait \"Category=", _multiSelect.SelectedItems));
+            argsForJira.Append("\"");
             Clipboard.SetData(DataFormats.Text, argsForJira);
 
             IsBusy = false;
         }
+
         private bool CanExecuteGetWeatherData(object? arg)
         {
             return !IsBusy;
