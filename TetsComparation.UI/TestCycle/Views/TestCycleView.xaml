@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="TetsComparation.UI.TestCycle.Views.TestCycleView"
-               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TetsComparation.UI.TestCycle.Views"
-             xmlns:customComponents="clr-namespace:TetsComparation.UI.TestCycle.Views.CustomComponents"
+             xmlns:local="clr-namespace:TetsComparation.UI.TestCycle.Views"             
+             xmlns:cstomBenavior="clr-namespace:TetsComparation.UI.TestCycle.Views.Bahaviors"
+             xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"              
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -95,24 +96,28 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterFaildTests" Grid.Column="0" 
-                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" 
-                                                 SelectedItemsList="{Binding SelectedItems.MasterFaildTests, Mode=TwoWay}">
-                    <customComponents:CustomListView.View>
+
+                <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" >
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
+                    <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
-                    </customComponents:CustomListView.View>
-                </customComponents:CustomListView>
-                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterNotExecutedTests" Grid.Column="1" 
-                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualNotExecutedTest}"
-                                                 SelectedItemsList="{Binding SelectedItems.MasterNotExecutedTests, Mode=OneWayToSource}">
+                    </ListView.View>
+                </ListView>
+                <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding MasterTestCycleModel.IndividualNotExecutedTest}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>
                         </GridView>
                     </ListView.View>
-                </customComponents:CustomListView>
+                </ListView>
             </Grid>
 
         </GroupBox>
@@ -135,24 +140,28 @@
                     <ColumnDefinition Width="185" SharedSizeGroup="Column1"/>
                     <ColumnDefinition Width="185" SharedSizeGroup="Column2"/>
                 </Grid.ColumnDefinitions>
-                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureFaildTests" Grid.Column="0" 
-                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualFaildTests}"
-                                                 SelectedItemsList="{Binding SelectedItems.FeatureFaildTests, Mode=OneWayToSource}">
+                <ListView Name="FeatureFaildTests" Grid.Column="0" 
+                          ItemsSource="{Binding FeatureTestCycleModel.IndividualFaildTests}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Упавшие"/>
                         </GridView>
                     </ListView.View>
-                </customComponents:CustomListView>
-                <customComponents:CustomListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureNotExecutedTests" Grid.Column="1" 
-                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualNotExecutedTest}"
-                                                 SelectedItemsList="{Binding SelectedItems.FeatureNotExecutedTests, Mode=OneWayToSource}">
+                </ListView>
+                <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureNotExecutedTests" Grid.Column="1" 
+                                                 ItemsSource="{Binding FeatureTestCycleModel.IndividualNotExecutedTest}">
+                    <i:Interaction.Behaviors>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Незапущенные"/>
                         </GridView>
                     </ListView.View>
-                </customComponents:CustomListView>
+                </ListView>
             </Grid>
         </GroupBox>
 
