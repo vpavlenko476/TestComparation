@@ -15,6 +15,7 @@ using GalaSoft.MvvmLight.Command;
 using TestComparation.DAL.TestCycle.Exceptions;
 using TetsComparation.UI.TestCycle.Views.Bahaviors;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace TetsComparation.UI.TestCycle.ViewModel
 {
@@ -25,7 +26,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         private TestCycleModel _featureTestCycleModel;
         private TestCycleModel _masterTestCycleModel;        
         private CycleId _cycleId;
-        private MultiSelectBehavior _multiSelect;
+        private ObservableCollection<string> _multiSelect;
         private bool _isBusy;
         private string _errorMeassage;
         private string login = ConfigurationManager.AppSettings["login"];
@@ -37,7 +38,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
         /// <summary>
         /// ListView SelectedItems
         /// </summary>
-        public MultiSelectBehavior MultiSelect
+        public ObservableCollection<string> MultiSelect
         {
             get { return _multiSelect; }
             set { Set(ref _multiSelect, value); }
@@ -123,7 +124,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             _client.BaseAddress = new Uri("https://jira.monopoly.su/");
             _getCycelServise = new GetCycleService(_client);            
             _cycleId = new CycleId();
-            _multiSelect = new MultiSelectBehavior();
+            _multiSelect = new ObservableCollection<string>();
         }
       
         /// <summary>
@@ -182,7 +183,7 @@ namespace TetsComparation.UI.TestCycle.ViewModel
             
             StringBuilder argsForJira = new StringBuilder($"-trait \"Category=");
 
-            argsForJira.Append(string.Join($"\" -trait \"Category=", _multiSelect.SelectedItems));
+            argsForJira.Append(string.Join($"\" -trait \"Category=", _multiSelect));
             argsForJira.Append("\"");
             Clipboard.SetData(DataFormats.Text, argsForJira);
 

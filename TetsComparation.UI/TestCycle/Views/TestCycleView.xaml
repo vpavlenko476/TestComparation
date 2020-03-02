@@ -99,7 +99,7 @@
 
                 <ListView Name="MasterFaildTests" Grid.Column="0" ItemsSource="{Binding MasterTestCycleModel.IndividualFaildTests}" >
                     <i:Interaction.Behaviors>
-                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect, Mode=TwoWay}"/>
                     </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
@@ -110,7 +110,7 @@
                 <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="MasterNotExecutedTests" Grid.Column="1" 
                                                  ItemsSource="{Binding MasterTestCycleModel.IndividualNotExecutedTest}">
                     <i:Interaction.Behaviors>
-                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect, Mode=TwoWay}"/>
                     </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
@@ -143,7 +143,7 @@
                 <ListView Name="FeatureFaildTests" Grid.Column="0" 
                           ItemsSource="{Binding FeatureTestCycleModel.IndividualFaildTests}">
                     <i:Interaction.Behaviors>
-                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect, Mode=TwoWay}"/>
                     </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
@@ -154,7 +154,7 @@
                 <ListView Style="{DynamicResource MaterialDesignListView}" x:Name="FeatureNotExecutedTests" Grid.Column="1" 
                                                  ItemsSource="{Binding FeatureTestCycleModel.IndividualNotExecutedTest}">
                     <i:Interaction.Behaviors>
-                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect.SelectedItems, Mode=TwoWay}"/>
+                        <cstomBenavior:MultiSelectBehavior SelectedItems="{Binding MultiSelect, Mode=TwoWay}"/>
                     </i:Interaction.Behaviors>
                     <ListView.View>
                         <GridView>
